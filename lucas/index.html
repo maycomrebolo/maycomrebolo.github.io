@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Seminovos premium BMW, MINI e Land Rover com Lucas, Executivo de Vendas da Grand Brasil. Chame no WhatsApp.">
+<meta property="og:title" content="Seminovos Grand Brasil · Lucas">
+<meta property="og:description" content="Estoque atualizado de seminovos premium. Escolha o seu e chame no WhatsApp.">
+<meta property="og:type" content="website">
+<title>Seminovos Grand Brasil</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: vitrine de showroom. Faixa de abertura escura (piso de concessionária à noite) com nome, prova de confiança e dois CTAs;
+   faixa de condições; filtros; grade de carros com ficha técnica; bloco "siga no Instagram"; botão de WhatsApp flutuante. */
+:root{
+  --bg:#0b0b0c; --surface:#161618; --ink:#f4f4f5; --muted:#a6a6ad; --line:#2b2b30;
+  --hero:#000000; --hero-ink:#ffffff; --hero-muted:#b4b4bb; --hero-line:#2b2b30;
+  --accent:#ffd400; --accent-soft:#232326; --wa:#ffd400; --wa-hover:#e9c200; --wa-ink:#111111;
+  --ig:#f06bb0; --ig-soft:#2b1624; --warn:#111111; --warn-soft:#ffd400; color-scheme:dark;
+  --display:"Montserrat",Arial,sans-serif;
+  --body:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Montserrat",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.pad{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1180px;margin:0 auto}
+a{color:inherit}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:12px;padding:13px 18px;font:600 15px/1 var(--body);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:background .15s,transform .15s}
+.btn svg{width:20px;height:20px;flex:none}
+.btn:focus-visible,.chip:focus-visible,select:focus-visible,.fab:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.btn-wa{background:var(--wa);color:var(--wa-ink)}
+.btn-wa:hover{background:var(--wa-hover)}
+.btn-ig{background:transparent;color:var(--hero-ink);border-color:var(--hero-line)}
+.btn-ig:hover{border-color:var(--ig)}
+.btn-line{background:transparent;color:var(--ink);border-color:var(--line)}
+
+/* Abertura */
+.hero{background:var(--hero);color:var(--hero-ink);padding-block:36px 40px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -10% -55% -10%;height:90%;background:radial-gradient(ellipse at center,rgba(255,212,0,.07),transparent 65%);pointer-events:none}
+.hero .inner{position:relative;z-index:1;display:grid;gap:18px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--hero-muted)}
+.hero h1{font-family:var(--display);font-weight:800;text-transform:uppercase;font-size:clamp(46px,10vw,104px);line-height:.9;margin:0;letter-spacing:.005em;text-wrap:balance}
+.hero h1 span{display:block;color:var(--hero-muted);font-weight:600;font-style:normal;font-size:.42em;letter-spacing:.06em;margin-top:8px}
+.hero p{margin:0;color:var(--hero-muted);max-width:56ch;font-size:16px}
+.who{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:var(--hero-muted);font-size:14px}
+.who b{color:var(--hero-ink);font-weight:600}
+.ctas{display:flex;flex-wrap:wrap;gap:10px}
+.ctas .btn{padding:15px 20px;font-size:16px}
+.proof{display:flex;flex-wrap:wrap;gap:8px 22px;margin:4px 0 0;padding:14px 0 0;border-top:1px solid var(--hero-line);list-style:none;font-family:var(--mono);font-size:13px;color:var(--hero-muted)}
+.proof b{color:var(--hero-ink);font-family:var(--display);font-size:22px;font-weight:700;margin-right:6px;font-variant-numeric:tabular-nums}
+
+/* Condições */
+.deal{background:var(--warn-soft);color:var(--warn);padding-block:12px}
+.deal .inner{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;font-size:14px}
+.deal strong{font-family:var(--display);font-size:18px;letter-spacing:.03em;text-transform:uppercase}
+
+main{padding-block:26px 40px}
+main .inner{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 16px}
+.tile{min-width:0;padding:16px!important;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:16px;padding:18px 20px;cursor:pointer;font:inherit;transition:border-color .15s,background .15s}
+.tile:hover{border-color:var(--accent)}
+.tile b{font:700 clamp(20px,5.2vw,40px)/1.05 var(--display);overflow-wrap:break-word;text-transform:uppercase;letter-spacing:.01em}
+.tile span{font-size:14px;color:var(--muted)}
+.tile[aria-pressed="true"]{background:var(--hero);color:var(--hero-ink);border-color:var(--hero)}
+.tile[aria-pressed="true"] span{color:var(--hero-muted)}
+.tile:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 15px;font:500 14px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip .n{font-family:var(--mono);font-size:12px;opacity:.7;margin-left:5px}
+.sort{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+select{font:500 14px var(--body);padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,310px),1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.photo{position:relative;aspect-ratio:4/3;max-width:100%;background:var(--line)}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.tag{position:absolute;left:10px;top:10px;font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;background:rgba(8,12,18,.82);color:#fff;padding:5px 8px;border-radius:6px}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:9px;flex:1;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.brand{font-family:var(--mono);font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.meta{font-family:var(--mono);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.name{font-family:var(--display);font-weight:700;font-size:27px;line-height:1.02;margin:0;text-wrap:balance}
+.specs{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.specs li{font-size:13px;background:var(--accent-soft);border-radius:6px;padding:3px 8px}
+.perks{font-size:13px;color:var(--muted);margin:0}
+.foot{margin-top:auto;display:grid;gap:12px;padding-top:6px}
+.price{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.price small{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.actions{display:grid;grid-template-columns:1fr auto;gap:8px}
+
+/* Instagram */
+.follow{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.follow .ring{width:64px;height:64px;border-radius:50%;background:conic-gradient(from 210deg,#f9a825,#e1306c,#833ab4,#f9a825);display:grid;place-items:center}
+.follow .ring span{width:56px;height:56px;border-radius:50%;background:var(--surface);display:grid;place-items:center;color:var(--ig)}
+.follow .ring svg{width:28px;height:28px}
+.follow>div{min-width:0}
+.troca{background:var(--accent-soft);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.troca>div{min-width:0}
+.troca .ico{width:56px;height:56px;border-radius:50%;background:var(--surface);color:var(--accent);display:grid;place-items:center}
+.troca .ico svg{width:28px;height:28px}
+.troca h2{font-family:var(--display);font-size:clamp(22px,6vw,30px);line-height:1;margin:0 0 6px;text-transform:uppercase;font-weight:800}
+.troca p{margin:0;color:var(--muted);max-width:52ch}
+@media (max-width:640px){.troca{grid-template-columns:1fr}.troca .ico{display:none}}
+#faixas{margin-top:-6px}
+.empty{grid-column:1/-1;background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:28px;text-align:center;color:var(--muted);margin:0}
+.empty a{color:var(--accent);font-weight:600}
+.follow h2{overflow-wrap:anywhere;font-family:var(--display);font-size:clamp(22px,6vw,30px);line-height:1;margin:0 0 6px;text-transform:uppercase;font-weight:800}
+.follow p{margin:0;color:var(--muted);max-width:52ch}
+.btn-igsolid{background:#c13584;color:#fff;border-color:#c13584}
+.btn-igsolid:hover{filter:brightness(1.08)}
+@media (max-width:640px){.follow{grid-template-columns:1fr;text-align:left}.follow .ring{display:none}}
+
+footer{padding-block:0 110px;color:var(--muted);font-size:13px}
+footer .inner{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:18px}
+.num{font-family:var(--mono);user-select:all;color:var(--ink)}
+.linkbtn{background:none;border:0;padding:0;color:var(--accent);font:inherit;cursor:pointer;text-decoration:underline}
+
+/* WhatsApp flutuante */
+.fab{position:fixed;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:20;display:flex;align-items:center;gap:10px;background:var(--wa);color:var(--wa-ink);text-decoration:none;border-radius:999px;padding:14px 18px 14px 14px;font:600 15px var(--body);box-shadow:0 10px 30px rgba(0,0,0,.28)}
+.fab svg{width:26px;height:26px}
+.fab:hover{background:var(--wa-hover)}
+@media (max-width:420px){.fab .lbl{display:none}.fab{padding:15px}}
+@media (prefers-reduced-motion:no-preference){
+  .card{transition:transform .18s,box-shadow .18s}.card:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(10,20,40,.12)}
+  .fab{animation:pop .5s .6s both}@keyframes pop{from{transform:scale(.85)}to{transform:scale(1)}}
+}
+
+/* Cores e letras no padrão do site da concessionária: preto, branco e amarelo, Montserrat sem itálico */
+.chip[aria-pressed="true"]{background:var(--accent);color:#111;border-color:var(--accent)}
+.tile[aria-pressed="true"]{background:var(--accent);color:#111;border-color:var(--accent)}
+.tile[aria-pressed="true"] span{color:#333}
+.btn-wa,.btn{border-radius:6px}
+.btn-wa{text-transform:uppercase;letter-spacing:.03em;font-weight:700}
+.fab{background:#25d366;color:#fff}.fab:hover{background:#1ebe5b}
+.hero h1{letter-spacing:-.01em;font-weight:800}
+.name{font-weight:800;letter-spacing:-.01em}
+.price{letter-spacing:-.01em}
+.card{border-color:var(--line)}
+.brand{color:var(--accent)}
+.deal strong{color:#111}
+
+.eyebrow{font-family:var(--display);font-size:clamp(16px,2.6vw,24px);font-weight:700;letter-spacing:.06em;color:var(--accent);line-height:1.25}
+.hero h1{font-size:clamp(32px,6vw,60px);line-height:1}
+.hero h1 span{font-size:clamp(15px,2.2vw,22px);margin-top:10px}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><path fill="currentColor" d="M12 7.3A4.7 4.7 0 1 0 12 16.7 4.7 4.7 0 0 0 12 7.3Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0ZM21.9 8c-.1-1.6-.4-3-1.6-4.2C19.1 2.6 17.6 2.2 16 2.1c-1.6-.1-6.4-.1-8 0-1.6.1-3 .4-4.2 1.6C2.6 4.9 2.2 6.4 2.1 8c-.1 1.6-.1 6.4 0 8 .1 1.6.4 3 1.6 4.2 1.2 1.2 2.6 1.6 4.2 1.6 1.6.1 6.4.1 8 0 1.6-.1 3-.4 4.2-1.6 1.2-1.2 1.6-2.6 1.6-4.2.1-1.6.1-6.4 0-8Zm-2.1 9.7a3.2 3.2 0 0 1-1.8 1.8c-1.3.5-4.3.4-5.7.4s-4.4.1-5.7-.4a3.2 3.2 0 0 1-1.8-1.8c-.5-1.3-.4-4.3-.4-5.7s-.1-4.4.4-5.7a3.2 3.2 0 0 1 1.8-1.8c1.3-.5 4.3-.4 5.7-.4s4.4-.1 5.7.4a3.2 3.2 0 0 1 1.8 1.8c.5 1.3.4 4.3.4 5.7s.1 4.4-.4 5.7Z"/></symbol>
+</svg>
+
+<section class="hero pad">
+  <div class="inner">
+    <div class="eyebrow">Grand Brasil · Seminovos Premium · Alphaville / São Paulo</div>
+    <h1>Lucas<span>BMW · MINI · Land Rover · Denza</span></h1>
+    <div class="who"><span><b>Executivo de Vendas</b></span></div>
+    <p>Carros selecionados, blindados ou sem blindagem. Escolha o seu e me chame direto no WhatsApp.</p>
+    <div class="ctas">
+      <a class="btn btn-wa" id="wa-hero" href="https://wa.me/5511995686888?text=Ol%C3%A1%20Lucas!%20Vi%20o%20cat%C3%A1logo%20de%20seminovos%20e%20quero%20saber%20mais." target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Chamar no WhatsApp</a>
+      <a class="btn btn-ig" id="wa-troca-hero" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Avaliar meu carro na troca</a>
+      <a class="btn btn-igsolid" href="https://www.instagram.com/grandbrasil_lucashelio/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>Seguir no Instagram</a>
+    </div>
+    <ul class="proof" id="proof"></ul>
+  </div>
+</section>
+
+<div class="deal pad"><div class="inner"><strong>Linha BMW</strong><span>Garantia Premium Selection 2 anos · taxa a partir de 0% · IPVA 2026 pago · revisões na concessionária · válido até 31/10/2026</span></div></div>
+
+<main class="pad">
+  <div class="inner">
+    <div class="split" role="group" aria-label="Blindagem">
+      <button type="button" class="tile" id="t-b" data-v="b"><b>Blindados</b><span id="n-b"></span></button>
+      <button type="button" class="tile" id="t-n" data-v="n"><b>Sem blindagem</b><span id="n-n"></span></button>
+    </div>
+    <div class="controls">
+      <div class="chips" id="chips" role="group" aria-label="Filtrar por marca"></div>
+      <label class="sort" for="ordem">Ordenar
+        <select id="ordem"><option value="desc">Maior preço</option><option value="asc">Menor preço</option><option value="km">Menor km</option></select>
+      </label>
+    </div>
+    <div class="chips" id="faixas" role="group" aria-label="Filtrar por faixa de preço"></div>
+    <div class="grid" id="grid"></div>
+
+    <section class="troca" aria-label="Avaliar meu carro na troca">
+      <div class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h11l-3-3M17 17H6l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div>
+        <h2>Tem carro para dar na troca?</h2>
+        <p>Me manda modelo, ano e km pelo WhatsApp que eu faço a avaliação do seu carro.</p>
+      </div>
+      <a class="btn btn-wa" id="wa-troca" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Avaliar meu carro</a>
+    </section>
+
+    <section class="follow" aria-label="Siga no Instagram">
+      <div class="ring"><span><svg><use href="#i-ig"/></svg></span></div>
+      <div>
+        <h2>Siga no Instagram</h2>
+        <p><b style="color:var(--ig)">@grandbrasil_lucashelio</b><br>Carro novo no estoque toda semana, vídeos e dicas para você comprar seu seminovo sem erro.</p>
+      </div>
+      <a class="btn btn-igsolid" href="https://www.instagram.com/grandbrasil_lucashelio/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>Seguir</a>
+    </section>
+  </div>
+</main>
+
+<footer class="pad">
+  <div class="inner">
+    <span>WhatsApp: <span class="num" id="numero">(11) 99568-6888</span> · <button class="linkbtn" id="copiar" type="button">copiar número</button></span>
+    <span>📍 <a href="https://www.google.com/maps/search/?api=1&query=Alameda+Tocantins+855+Alphaville+Barueri+SP" target="_blank" rel="noopener">Grand Brasil Alphaville · Alameda Tocantins, 855 · Alphaville, Barueri – SP</a></span>
+    <span>📍 <a href="https://www.google.com/maps/search/?api=1&query=Av.+Dr.+Gast%C3%A3o+Vidigal+1357+Vila+Leopoldina+S%C3%A3o+Paulo" target="_blank" rel="noopener">BMW Gastão · Av. Dr. Gastão Vidigal, 1357 · Vila Leopoldina, São Paulo – SP</a></span>
+    <span>Valores e condições sujeitos a alteração. Confirme a disponibilidade antes da visita.</span>
+  </div>
+</footer>
+
+<a class="fab" href="https://wa.me/5511995686888?text=Ol%C3%A1%20Lucas!%20Vi%20o%20cat%C3%A1logo%20de%20seminovos%20e%20quero%20saber%20mais." target="_blank" rel="noopener" aria-label="Chamar no WhatsApp"><svg><use href="#i-wa"/></svg><span class="lbl">Fale comigo</span></a>
+
+<script>
+(async()=>{
+let CARS=[];
+try{const t=await (await fetch("https://maycomrebolo.github.io/?v="+Date.now(),{cache:"no-store"})).text();const m=t.match(/const CARS = (\[[\s\S]*?\n\]);/);CARS=(0,eval)(m[1]);CARS.forEach(c=>c.ig="");}catch(e){document.getElementById("grid").innerHTML='<p class="empty">Não foi possível carregar o estoque. Recarregue a página.</p>';return}
+const PHONE="5511995686888";
+const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const kmf=n=>n.toLocaleString("pt-BR")+" km";
+let marca="Todas", ordem="desc", blind="", faixa="";
+try{ordem=localStorage.getItem("ordem")||"desc"}catch(e){}
+const sel=document.getElementById("ordem"); sel.value=ordem;
+
+const brands=[...new Set(CARS.map(c=>c.brand))];
+const bmwN=CARS.filter(c=>c.brand==="BMW").length;
+const isB=c=>/blindad/i.test(c.tag||"");
+const blindN=CARS.filter(isB).length;
+document.getElementById("proof").innerHTML=
+  `<li><b>${CARS.length}</b>carros no estoque</li><li><b>${bmwN}</b>BMW</li><li><b>${blindN}</b>blindados</li><li><b>${new Set(CARS.map(c=>c.brand)).size}</b>marcas</li>`;
+
+const FX=[["a","Até R$ 300 mil",c=>c.price<300000],["b","R$ 300 a 600 mil",c=>c.price>=300000&&c.price<600000],["c","Acima de R$ 600 mil",c=>c.price>=600000]];
+const okB=c=>!blind||(blind==="b")===isB(c);
+const okM=c=>marca==="Todas"||c.brand===marca;
+const okF=c=>!faixa||FX.find(f=>f[0]===faixa)[2](c);
+const plural=n=>n+(n===1?" carro":" carros");
+function chips(){
+  const base=CARS.filter(c=>okB(c)&&okF(c));
+  const counts={Todas:base.length}; base.forEach(c=>counts[c.brand]=(counts[c.brand]||0)+1);
+  if(!(marca in counts)) marca="Todas";
+  const pool=CARS.filter(c=>okM(c)&&okF(c));
+  const nb=pool.filter(isB).length;
+  document.getElementById("n-b").textContent=plural(nb);
+  document.getElementById("n-n").textContent=plural(pool.length-nb);
+  ["b","n"].forEach(v=>document.getElementById("t-"+v).setAttribute("aria-pressed",blind===v));
+  const el=document.getElementById("chips"); el.innerHTML="";
+  Object.keys(counts).forEach(b=>{
+    const x=document.createElement("button");x.type="button";x.className="chip";x.id="chip-"+b.replace(/\s/g,"");
+    x.setAttribute("aria-pressed",b===marca);x.innerHTML=b+'<span class="n">'+counts[b]+'</span>';
+    x.onclick=()=>{marca=b;chips();render()};el.appendChild(x);
+  });
+  const fp=CARS.filter(c=>okB(c)&&okM(c));
+  const fe=document.getElementById("faixas"); fe.innerHTML="";
+  FX.forEach(([k,label,fn])=>{
+    const n=fp.filter(fn).length;
+    const x=document.createElement("button");x.type="button";x.className="chip";
+    x.setAttribute("aria-pressed",faixa===k);x.innerHTML=label+'<span class="n">'+n+'</span>';
+    x.onclick=()=>{faixa=faixa===k?"":k;chips();render()};fe.appendChild(x);
+  });
+}
+function render(){
+  const list=CARS.filter(c=>okM(c)&&okB(c)&&okF(c))
+    .sort((a,b)=>ordem==="asc"?a.price-b.price:ordem==="km"?a.km-b.km:b.price-a.price);
+  document.getElementById("grid").innerHTML=list.map(c=>{
+    const msg=encodeURIComponent(`Olá Lucas! Tenho interesse no ${c.brand} ${c.name} ${c.year} (${brl(c.price)}) que vi no catálogo.`);
+    return `<article class="card">
+      <div class="photo"><img src="${c.img}" alt="${c.brand} ${c.name}" loading="lazy">${c.tag?`<span class="tag">${c.tag}</span>`:""}</div>
+      <div class="body">
+        <div class="top"><span class="brand">${c.brand}</span><span class="meta">${c.year} · ${kmf(c.km)}</span></div>
+        <h2 class="name">${c.name}</h2>
+        <ul class="specs">${c.specs.map(s=>`<li>${s}</li>`).join("")}</ul>
+        <p class="perks">${c.noperks?"":c.bmw?"Garantia Premium Selection · Taxa 0% · IPVA pago · Aceita troca":"Revisado · Laudo aprovado · Aceita troca"}</p>
+        <div class="foot">
+          <div class="price"><small>Valor</small>${brl(c.price)}</div>
+          <div class="actions">
+            <a class="btn btn-wa" href="https://wa.me/${PHONE}?text=${msg}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Quero esse</a>
+            ${/instagram\.com\/p\//.test(c.ig)?`<a class="btn btn-line" href="${c.ig}" target="_blank" rel="noopener" aria-label="Ver fotos no Instagram"><svg><use href="#i-ig"/></svg>Fotos</a>`:`<a class="btn btn-line" href="https://wa.me/${PHONE}?text=${encodeURIComponent(`Olá Lucas! Pode me mandar fotos e vídeo do ${c.brand} ${c.name} ${c.year}?`)}" target="_blank" rel="noopener" aria-label="Pedir fotos pelo WhatsApp"><svg><use href="#i-wa"/></svg>Pedir fotos</a>`}
+          </div>
+        </div>
+      </div></article>`;
+  }).join("")||`<p class="empty">Nenhum carro com esses filtros agora. <a href="https://wa.me/${PHONE}?text=${encodeURIComponent("Olá Lucas! Procuro um carro que não achei no catálogo: ")}" target="_blank" rel="noopener">Me fala o que você procura</a> que eu busco pra você.</p>`;
+}
+sel.onchange=e=>{ordem=e.target.value;try{localStorage.setItem("ordem",ordem)}catch(_){};render()};
+document.getElementById("copiar").onclick=async e=>{
+  const b=e.currentTarget;
+  try{await navigator.clipboard.writeText("(11) 99568-6888");b.textContent="número copiado"}
+  catch(_){const r=document.createRange();r.selectNodeContents(document.getElementById("numero"));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent="selecionado, copie"}
+  setTimeout(()=>b.textContent="copiar número",2000);
+};
+document.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{blind=blind===t.dataset.v?"":t.dataset.v;chips();render()});
+const trocaUrl="https://wa.me/"+PHONE+"?text="+encodeURIComponent("Olá Lucas! Quero avaliar meu carro na troca.\nModelo: \nAno: \nKm: ");
+document.getElementById("wa-troca").href=trocaUrl;document.getElementById("wa-troca-hero").href=trocaUrl;
+chips();render();
+
+})();
+</script>
+
+</body>
+</html>
