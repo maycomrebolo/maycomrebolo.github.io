@@ -85,6 +85,14 @@ select{background:var(--surface);color:var(--ink);border:1px solid var(--line);b
 .facts li.bl{background:var(--accent);color:#111;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
 .chip.chip-bl{border-color:var(--accent);color:var(--accent);font-weight:800}
 .chip.chip-bl[aria-pressed="true"]{color:#111}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 16px}
+.tile{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:16px;cursor:pointer;font:inherit}
+.tile:hover{border-color:var(--accent)}
+.tile b{font:800 clamp(20px,5.2vw,38px)/1.05 var(--f);text-transform:uppercase;overflow-wrap:break-word}
+.tile span{font-size:14px;color:var(--muted)}
+.tile[aria-pressed="true"]{background:var(--accent);color:#111;border-color:var(--accent)}
+.tile[aria-pressed="true"] span{color:#333}
+.tile:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 footer{border-top:1px solid var(--line);padding-block:22px;color:var(--muted);font-size:13px}
 footer .inner{display:flex;flex-direction:column;gap:6px}
 footer a{color:var(--ink)}
@@ -112,6 +120,10 @@ footer a{color:var(--ink)}
 
 <main class="pad">
   <div class="inner">
+    <div class="split" role="group" aria-label="Blindagem">
+      <button type="button" class="tile" id="t-b" data-v="b"><b>🛡 Blindados</b><span id="n-b"></span></button>
+      <button type="button" class="tile" id="t-n" data-v="n"><b>Sem blindagem</b><span id="n-n"></span></button>
+    </div>
     <div class="controls">
       <div class="row" id="chips" role="group" aria-label="Filtrar por marca"></div>
       <div class="row">
@@ -147,24 +159,27 @@ const PHONE="5511991198915";
 const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const kmf=n=>n.toLocaleString("pt-BR")+" km";
 const wa=t=>`https://wa.me/${PHONE}?text=${encodeURIComponent(t)}`;
-let marca="Todas",faixa="",ordem="desc";
+let marca="Todas",faixa="",ordem="desc",blind="";
 const FX=[["a","Até R$ 120 mil",c=>c.price!=null&&c.price<=120000],["b","R$ 120 a 250 mil",c=>c.price>120000&&c.price<=250000],["c","R$ 250 a 350 mil",c=>c.price>250000&&c.price<=350000],["d","Acima de R$ 350 mil",c=>c.price>350000]];
-const okM=c=>marca==="Todas"||(marca==="Blindados"?!!c.blind:c.brand===marca), okF=c=>!faixa||FX.find(f=>f[0]===faixa)[2](c);
+const okM=c=>marca==="Todas"||c.brand===marca, okB=c=>!blind||(blind==="b")===!!c.blind, okF=c=>!faixa||FX.find(f=>f[0]===faixa)[2](c);
 const off=c=>c.price&&c.fipe?Math.round((1-c.price/c.fipe)*100):null;
 document.getElementById("wa-top").href=document.getElementById("wa-fab").href=wa("Olá Maycom! Sou lojista e vi sua lista de repasse.");
 const withF=CARS.filter(c=>off(c)!=null), avg=withF.length?Math.round(withF.reduce((s,c)=>s+off(c),0)/withF.length):null;
 document.getElementById("meta").innerHTML=`<span><b>${CARS.length}</b>carros para repasse</span><span><b>${new Set(CARS.map(c=>c.brand)).size}</b>marcas</span>${CARS.some(c=>c.blind)?`<span><b>${CARS.filter(c=>c.blind).length}</b>blindados</span>`:""}`+(avg!=null?`<span><b>${avg}%</b>abaixo da FIPE, em média</span>`:"");
 function chips(){
-  const base=CARS.filter(okF), cnt={Todas:base.length}; const nb=base.filter(c=>c.blind).length; if(nb) cnt.Blindados=nb; base.forEach(c=>cnt[c.brand]=(cnt[c.brand]||0)+1);
+  const base=CARS.filter(c=>okF(c)&&okB(c)), cnt={Todas:base.length}; base.forEach(c=>cnt[c.brand]=(cnt[c.brand]||0)+1);
   if(!(marca in cnt)) marca="Todas";
   const el=document.getElementById("chips"); el.innerHTML="";
   Object.keys(cnt).forEach(b=>{const x=document.createElement("button");x.type="button";x.className="chip"+(b==="Blindados"?" chip-bl":"");x.setAttribute("aria-pressed",b===marca);x.innerHTML=(b==="Blindados"?"🛡 ":"")+b+'<span class="n">'+cnt[b]+'</span>';x.onclick=()=>{marca=b;chips();render()};el.appendChild(x)});
-  const fe=document.getElementById("faixas"); fe.innerHTML=""; const pool=CARS.filter(okM);
+  const fe=document.getElementById("faixas"); fe.innerHTML=""; const pool=CARS.filter(c=>okM(c)&&okB(c));
+  const pb=CARS.filter(c=>okM(c)&&okF(c)), nb=pb.filter(c=>c.blind).length, pl=n=>n+(n===1?" carro":" carros");
+  document.getElementById("n-b").textContent=pl(nb); document.getElementById("n-n").textContent=pl(pb.length-nb);
+  ["b","n"].forEach(v=>document.getElementById("t-"+v).setAttribute("aria-pressed",blind===v));
   FX.forEach(([k,l,fn])=>{const x=document.createElement("button");x.type="button";x.className="chip";x.setAttribute("aria-pressed",faixa===k);x.innerHTML=l+'<span class="n">'+pool.filter(fn).length+'</span>';x.onclick=()=>{faixa=faixa===k?"":k;chips();render()};fe.appendChild(x)});
 }
 function render(){
   const yr=c=>parseInt((c.year||"").split("/").pop())||0;
-  const list=CARS.filter(c=>okM(c)&&okF(c)).sort((a,b)=>ordem==="asc"?(a.price??1e12)-(b.price??1e12):ordem==="km"?a.km-b.km:ordem==="ano"?yr(b)-yr(a):ordem==="fipe"?(off(b)??-99)-(off(a)??-99):(b.price??-1)-(a.price??-1));
+  const list=CARS.filter(c=>okM(c)&&okF(c)&&okB(c)).sort((a,b)=>ordem==="asc"?(a.price??1e12)-(b.price??1e12):ordem==="km"?a.km-b.km:ordem==="ano"?yr(b)-yr(a):ordem==="fipe"?(off(b)??-99)-(off(a)??-99):(b.price??-1)-(a.price??-1));
   document.getElementById("grid").innerHTML=list.map(c=>{
     const ref=`${c.brand} ${c.name} ${c.year}${c.blind?" · "+c.blind:""} · ${kmf(c.km)} · final ${c.final}`;
     const o=off(c);
@@ -185,6 +200,7 @@ function render(){
   }).join("")||`<p class="empty">Nenhum carro com esses filtros agora. <a href="${wa("Olá Maycom! Procuro um carro para repasse: ")}" target="_blank" rel="noopener">Me fala o que você procura</a>.</p>`;
 }
 document.getElementById("ordem").onchange=e=>{ordem=e.target.value;render()};
+document.querySelectorAll(".tile").forEach(t=>t.onclick=()=>{blind=blind===t.dataset.v?"":t.dataset.v;chips();render()});
 chips();render();
 </script>
 </body>
