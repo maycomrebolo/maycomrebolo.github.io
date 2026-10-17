@@ -99,6 +99,25 @@ footer a{color:var(--ink)}
 .fab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:#25d366;color:#fff;border-radius:999px;padding:14px 18px;display:flex;align-items:center;gap:8px;font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
 .fab svg{width:22px;height:22px}
 @media (max-width:420px){.fab span{display:none}.fab{padding:15px}}
+
+/* card no mesmo padrão do site de varejo */
+.card{border-radius:16px}
+.card.blind{border-color:var(--line);box-shadow:none}
+.photo{position:relative;aspect-ratio:4/3;background:radial-gradient(120% 90% at 80% 10%,#2a2a2e 0%,#141416 55%,#0b0b0c 100%);overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .ph{position:absolute;inset:0;background:no-repeat center 55%/62% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 100'%3E%3Cpath d='M18 72c0-8 4-13 12-15l26-6 22-18c6-5 13-7 21-7h46c9 0 17 3 23 9l18 17 30 6c9 2 14 8 14 16v10H18z' fill='%23ffffff' fill-opacity='.08'/%3E%3Ccircle cx='62' cy='80' r='13' fill='%23ffffff' fill-opacity='.12'/%3E%3Ccircle cx='182' cy='80' r='13' fill='%23ffffff' fill-opacity='.12'/%3E%3C/svg%3E")}
+.photo .ph span{position:absolute;left:0;right:0;bottom:16px;text-align:center;font-size:12px;color:var(--muted)}
+.tag{position:absolute;left:10px;top:10px;font:600 11px var(--f);letter-spacing:.06em;text-transform:uppercase;background:rgba(8,12,18,.82);color:#fff;padding:5px 8px;border-radius:6px}
+.body{padding:14px 16px 16px;gap:9px;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.top .brand{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+.top .meta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.name{font-weight:700;font-size:27px;line-height:1.02}
+.perks{font-size:13px;color:var(--muted);margin:0}
+.foot{margin-top:auto;display:grid;gap:12px;padding-top:6px}
+.money{margin-top:0}
+.price b{font-size:34px;line-height:1}
+.price small{font-weight:500;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -183,18 +202,21 @@ function render(){
   document.getElementById("grid").innerHTML=list.map(c=>{
     const ref=`${c.brand} ${c.name} ${c.year}${c.blind?" · "+c.blind:""} · ${kmf(c.km)} · final ${c.final}`;
     const o=off(c);
-    return `<article class="card${c.blind?" blind":""}">
-      <div class="cover${FOTOS[c.id]?" has-img":""}">${FOTOS[c.id]?`<img src="${FOTOS[c.id]}" alt="${c.brand} ${c.name}" loading="lazy">`:""}${c.blind?`<span class="badge">🛡 ${c.blind}</span>`:""}<span class="loc">${c.local}<br>Placa final ${c.final}</span><span class="cb">${c.brand}</span><span class="cn">${FOTOS[c.id]?c.name:"Fotos e laudo pelo WhatsApp"}</span></div>
+    return `<article class="card">
+      <div class="photo">${FOTOS[c.id]?`<img src="${FOTOS[c.id]}" alt="${c.brand} ${c.name}" loading="lazy">`:`<div class="ph"><span>Fotos e laudo pelo WhatsApp</span></div>`}${c.blind?`<span class="tag">Blindado</span>`:""}</div>
       <div class="body">
+        <div class="top"><span class="brand">${c.brand}</span><span class="meta">${c.year} · ${kmf(c.km)}</span></div>
         <h2 class="name">${c.name}</h2>
-        <ul class="facts">${c.blind?`<li class="bl">🛡 ${c.blind}</li>`:""}<li>${c.year}</li><li>${kmf(c.km)}</li></ul>
-        <div class="money">
-          <div class="price"><small>Valor repasse</small><b>${c.price!=null?brl(c.price):"Consulte"}</b></div>
-          ${c.fipe?`<div class="fipe">FIPE ${brl(c.fipe)}${o!=null&&o>0?`<br><span class="pct">${o}% abaixo</span>`:""}</div>`:""}
-        </div>
-        <div class="actions">
-          <a class="btn btn-y" href="${wa(`Olá Maycom! Tenho interesse no repasse: ${ref}${c.price!=null?" ("+brl(c.price)+")":""}.`)}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Tenho interesse</a>
-          <a class="btn btn-o" href="${wa(`Olá Maycom! Pode me mandar fotos e o laudo do repasse: ${ref}?`)}" target="_blank" rel="noopener" aria-label="Pedir fotos e laudo"><svg><use href="#i-cam"/></svg>Fotos</a>
+        <ul class="facts">${c.blind?`<li>Blindado</li>`:""}<li>${c.local}</li><li>Placa final ${c.final}</li></ul>
+        <div class="foot">
+          <div class="money">
+            <div class="price"><small>Valor repasse</small><b>${c.price!=null?brl(c.price):"Consulte"}</b></div>
+            ${c.fipe?`<div class="fipe">FIPE ${brl(c.fipe)}${o!=null&&o>0?`<br><span class="pct">${o}% abaixo</span>`:""}</div>`:""}
+          </div>
+          <div class="actions">
+            <a class="btn btn-y" href="${wa(`Olá Maycom! Tenho interesse no repasse: ${ref}${c.price!=null?" ("+brl(c.price)+")":""}.`)}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Tenho interesse</a>
+            <a class="btn btn-o" href="${wa(`Olá Maycom! Pode me mandar fotos e o laudo do repasse: ${ref}?`)}" target="_blank" rel="noopener" aria-label="Pedir fotos e laudo"><svg><use href="#i-wa"/></svg>Pedir fotos</a>
+          </div>
         </div>
       </div></article>`;
   }).join("")||`<p class="empty">Nenhum carro com esses filtros agora. <a href="${wa("Olá Maycom! Procuro um carro para repasse: ")}" target="_blank" rel="noopener">Me fala o que você procura</a>.</p>`;
