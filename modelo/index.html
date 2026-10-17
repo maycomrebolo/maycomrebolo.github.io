@@ -223,7 +223,7 @@ footer .inner{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:
 <script>
 (async()=>{
 let CARS=[];
-try{const t=await (await fetch("/?v="+Date.now(),{cache:"no-store"})).text();const m=t.match(/const CARS = (\[[\s\S]*?\n\]);/);CARS=(0,eval)(m[1]);CARS.forEach(c=>c.ig="");}catch(e){document.getElementById("grid").innerHTML='<p class="empty">Não foi possível carregar o estoque. Recarregue a página.</p>';return}
+try{const t=await (await fetch("https://maycomrebolo.github.io/?v="+Date.now(),{cache:"no-store"})).text();const m=t.match(/const CARS = (\[[\s\S]*?\n\]);/);CARS=(0,eval)(m[1]);CARS.forEach(c=>c.ig="");}catch(e){document.getElementById("grid").innerHTML='<p class="empty">Não foi possível carregar o estoque. Recarregue a página.</p>';return}
 const PHONE="5511991198915";
 const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const kmf=n=>n.toLocaleString("pt-BR")+" km";
