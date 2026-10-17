@@ -332,7 +332,7 @@ function render(){
           <div class="price"><small>Valor</small>${brl(c.price)}</div>
           <div class="actions">
             <a class="btn btn-wa" href="https://wa.me/${PHONE}?text=${msg}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Quero esse</a>
-            ${/instagram\.com\/p\//.test(c.ig)?`<a class="btn btn-line" href="${c.ig}" target="_blank" rel="noopener" aria-label="Ver fotos no Instagram"><svg><use href="#i-ig"/></svg>Fotos</a>`:`<a class="btn btn-line" href="https://www.instagram.com/grandbrasil_maycomrebolo_/" target="_blank" rel="noopener" aria-label="Abrir o Instagram"><svg><use href="#i-ig"/></svg>Instagram</a>`}
+            ${/instagram\.com\/p\//.test(c.ig)?`<a class="btn btn-line" href="${c.ig}" target="_blank" rel="noopener" aria-label="Ver fotos no Instagram"><svg><use href="#i-ig"/></svg>Fotos</a>`:`<a class="btn btn-line" href="https://wa.me/${PHONE}?text=${encodeURIComponent(`Olá Maycom! Pode me mandar fotos e vídeo do ${c.brand} ${c.name} ${c.year}?`)}" target="_blank" rel="noopener" aria-label="Pedir fotos pelo WhatsApp"><svg><use href="#i-wa"/></svg>Pedir fotos</a>`}
           </div>
         </div>
       </div></article>`;
