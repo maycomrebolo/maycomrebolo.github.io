@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Repasse · Maycom Rebolo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+/* Lista de repasse para lojistas: mesmo preto/amarelo do site de varejo, cards sem foto (estoque de revenda não tem anúncio),
+   foco em valor x FIPE, km, ano e local, com WhatsApp direto. */
+:root{
+  --bg:#0b0b0c; --surface:#161618; --ink:#f4f4f5; --muted:#a6a6ad; --line:#2b2b30;
+  --accent:#ffd400; --accent-ink:#111; --soft:#232326; --good:#3ddc84;
+  --f:"Montserrat",system-ui,-apple-system,"Segoe UI",sans-serif; color-scheme:dark;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0b0b0c}}
+:root[data-theme="dark"]{--bg:#0b0b0c}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.5;margin:0}
+.pad{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1180px;margin:0 auto}
+header{background:#000;padding-block:28px 24px;border-bottom:1px solid var(--line)}
+.eyebrow{font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);font-size:clamp(14px,2.2vw,20px)}
+h1{font-weight:800;text-transform:uppercase;font-size:clamp(28px,5.4vw,52px);line-height:1;margin:8px 0 6px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0;max-width:62ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:14px;font-size:13px;color:var(--muted)}
+.meta b{color:var(--ink);font-size:20px;font-weight:800;margin-right:5px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:6px;padding:12px 16px;font:700 14px/1 var(--f);text-decoration:none;border:1px solid transparent;cursor:pointer;text-transform:uppercase;letter-spacing:.03em}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-y{background:var(--accent);color:var(--accent-ink)}
+.btn-y:hover{filter:brightness(.95)}
+.btn-o{background:transparent;color:var(--ink);border-color:var(--line);text-transform:none;letter-spacing:0;font-weight:600}
+.btn:focus-visible,.chip:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.top-cta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+main{padding-block:22px 48px}
+.controls{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 14px;font:600 13.5px var(--f);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:#111;border-color:var(--accent)}
+.chip .n{font-size:12px;opacity:.7;margin-left:5px}
+.sort{margin-left:auto;display:flex;gap:8px;align-items:center;font-size:13px;color:var(--muted)}
+select{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:500 14px var(--f)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.band{background:linear-gradient(135deg,#1f1f22,#0f0f10);padding:16px 18px 14px;border-bottom:3px solid var(--accent);display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.band .brand{font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-size:13px}
+.band .local{font-size:12px;color:var(--muted);text-align:right}
+.body{padding:14px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.name{font-weight:800;font-size:20px;line-height:1.15;margin:0;text-wrap:balance}
+.facts{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
+.facts li{font-size:13px;background:var(--soft);border-radius:6px;padding:3px 8px}
+.money{margin-top:auto;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.price small{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.price b{font-weight:800;font-size:28px;line-height:1.1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.fipe{font-size:12.5px;color:var(--muted);text-align:right}
+.fipe .pct{display:inline-block;margin-top:3px;background:rgba(61,220,132,.14);color:var(--good);font-weight:700;border-radius:5px;padding:2px 7px}
+.actions{display:grid;grid-template-columns:1fr auto;gap:8px}
+.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:12px;padding:28px;text-align:center;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-block:22px;color:var(--muted);font-size:13px}
+footer .inner{display:flex;flex-direction:column;gap:6px}
+footer a{color:var(--ink)}
+.fab{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:#25d366;color:#fff;border-radius:999px;padding:14px 18px;display:flex;align-items:center;gap:8px;font-weight:700;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.fab svg{width:22px;height:22px}
+@media (max-width:420px){.fab span{display:none}.fab{padding:15px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.8 4.4 3.9 1.6.7 2.3.8 3.1.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></symbol>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+</svg>
+
+<header class="pad">
+  <div class="inner">
+    <div class="eyebrow">Grand Brasil · Repasse para lojistas</div>
+    <h1>Maycom Rebolo</h1>
+    <p class="sub">Carros para revenda, direto da concessionária. Valores para lojista, sujeitos a confirmação. Chame no WhatsApp para fotos, laudo e fechamento.</p>
+    <div class="meta" id="meta"></div>
+    <div class="top-cta"><a class="btn btn-y" id="wa-top" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Chamar no WhatsApp</a></div>
+  </div>
+</header>
+
+<main class="pad">
+  <div class="inner">
+    <div class="controls">
+      <div class="row" id="chips" role="group" aria-label="Filtrar por marca"></div>
+      <div class="row">
+        <div class="row" id="faixas" role="group" aria-label="Filtrar por faixa de valor"></div>
+        <label class="sort" for="ordem">Ordenar
+          <select id="ordem"><option value="desc">Maior valor</option><option value="asc">Menor valor</option><option value="fipe">Maior desconto na FIPE</option><option value="km">Menor km</option><option value="ano">Mais novo</option></select>
+        </label>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</main>
+
+<footer class="pad">
+  <div class="inner">
+    <span>WhatsApp: (11) 99119-8915 · Maycom Rebolo, Gerente de Seminovos</span>
+    <span>📍 Grand Brasil Alphaville · Alameda Tocantins, 855 · Alphaville, Barueri – SP</span>
+    <span>📍 BMW Gastão · Av. Dr. Gastão Vidigal, 1357 · Vila Leopoldina, São Paulo – SP</span>
+    <span>Posição do estoque de 16/10. Carros sujeitos à disponibilidade; valores para repasse, confirme antes de fechar.</span>
+  </div>
+</footer>
+<a class="fab" id="wa-fab" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp"><svg><use href="#i-wa"/></svg><span>Fale comigo</span></a>
+
+<script>
+const CARS = [{"id": "EOB1J66", "final": "6", "brand": "BMW", "name": "X6 4.4 V8 Biturbo M Competition", "year": "2022/2022", "km": 47705, "price": 440000, "fipe": 665049, "local": "Alphaville / Barueri"}, {"id": "BWL3F56", "final": "6", "brand": "BMW", "name": "X6 4.4 V8 Biturbo M Competition", "year": "2022/2022", "km": 52920, "price": 440000, "fipe": 665049, "local": "Alphaville / Barueri"}, {"id": "FVM4F04", "final": "4", "brand": "Porsche", "name": "718 2.0 H4 Cayman PDK", "year": "2023/2023", "km": 9600, "price": 420000, "fipe": 496809, "local": "Alphaville / Barueri"}, {"id": "SJM9H10", "final": "0", "brand": "Lexus", "name": "RX 500H 2.4 Dual VVT-i Hybrid F-Sport AWD", "year": "2023/2023", "km": 61362, "price": 310000, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "CUT9D00", "final": "0", "brand": "BMW", "name": "X5 3.0 I6 xDrive45e M Sport", "year": "2021/2022", "km": 71438, "price": 290000, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "BYX8J66", "final": "6", "brand": "BMW", "name": "X5 3.0 I6 xDrive45e M Sport", "year": "2020/2021", "km": 70623, "price": 280000, "fipe": 315822, "local": "São Paulo (Gastão)"}, {"id": "BRR1F81", "final": "1", "brand": "Porsche", "name": "Cayenne 3.0 V6 E-Hybrid AWD", "year": "2019/2020", "km": 93614, "price": 270000, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "GBZ9G83", "final": "3", "brand": "Audi", "name": "Q7 3.0 V6 TFSI MHEV Quattro", "year": "2020/2021", "km": 67737, "price": 250000, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "CYS0A24", "final": "4", "brand": "Land Rover", "name": "Discovery 3.0 V6 TD6 HSE 4WD", "year": "2019/2020", "km": 89400, "price": 210000, "fipe": 244637, "local": "Alphaville / Barueri"}, {"id": "EWX0725", "final": "5", "brand": "Land Rover", "name": "Range Rover Sport 3.0 HSE 4X4 V6", "year": "2019/2019", "km": 72003, "price": 210000, "fipe": 258086, "local": "Alphaville / Barueri"}, {"id": "DMT6F39", "final": "9", "brand": "BMW", "name": "X4 2.0 xDrive30i M Sport", "year": "2020/2020", "km": 84503, "price": 205000, "fipe": 230359, "local": "Alphaville / Barueri"}, {"id": "QZB4G76", "final": "6", "brand": "BMW", "name": "X4 2.0 xDrive30i M Sport", "year": "2021/2021", "km": 92716, "price": 200000, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "RMX3F52", "final": "2", "brand": "Volvo", "name": "XC60 2.0 T8 Recharge Inscription AWD", "year": "2021/2021", "km": 72094, "price": 154000, "fipe": 195921, "local": "Alphaville / Barueri"}, {"id": "FNR3H77", "final": "7", "brand": "Honda", "name": "Civic 1.5 Touring CVT", "year": "2016/2017", "km": 83853, "price": 125000, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "FWR3G38", "final": "8", "brand": "BMW", "name": "X1 2.0 sDrive20i", "year": "2017/2018", "km": 59880, "price": 100000, "fipe": 111495, "local": "Alphaville / Barueri"}, {"id": "ESP5F07", "final": "7", "brand": "BMW", "name": "X1 2.0 sDrive20i", "year": "2019/2019", "km": 104902, "price": 90000, "fipe": 120160, "local": "Alphaville / Barueri"}, {"id": "BVP5G77", "final": "7", "brand": "BMW", "name": "X1 2.0 sDrive20i GP", "year": "2016/2016", "km": 145125, "price": 84000, "fipe": 99937, "local": "Alphaville / Barueri"}, {"id": "FOI3044", "final": "4", "brand": "Hyundai", "name": "Santa Fe 3.3 4X4 7 Lugares V6 270CV", "year": "2014/2015", "km": 101127, "price": 65000, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "FWP8043", "final": "3", "brand": "Land Rover", "name": "Range Rover Evoque 2.0 Dynamic 4WD", "year": "2014/2014", "km": 54760, "price": null, "fipe": null, "local": "São Paulo (Gastão)"}, {"id": "FRN7A03", "final": "3", "brand": "Volvo", "name": "XC60 2.0 T8 Hybrid Momentum AWD", "year": "2021/2021", "km": 94639, "price": null, "fipe": 177126, "local": "Alphaville / Barueri"}];
+const PHONE="5511991198915";
+const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
+const kmf=n=>n.toLocaleString("pt-BR")+" km";
+const wa=t=>`https://wa.me/${PHONE}?text=${encodeURIComponent(t)}`;
+let marca="Todas",faixa="",ordem="desc";
+const FX=[["a","Até R$ 120 mil",c=>c.price!=null&&c.price<=120000],["b","R$ 120 a 250 mil",c=>c.price>120000&&c.price<=250000],["c","R$ 250 a 350 mil",c=>c.price>250000&&c.price<=350000],["d","Acima de R$ 350 mil",c=>c.price>350000]];
+const okM=c=>marca==="Todas"||c.brand===marca, okF=c=>!faixa||FX.find(f=>f[0]===faixa)[2](c);
+const off=c=>c.price&&c.fipe?Math.round((1-c.price/c.fipe)*100):null;
+document.getElementById("wa-top").href=document.getElementById("wa-fab").href=wa("Olá Maycom! Sou lojista e vi sua lista de repasse.");
+const withF=CARS.filter(c=>off(c)!=null), avg=withF.length?Math.round(withF.reduce((s,c)=>s+off(c),0)/withF.length):null;
+document.getElementById("meta").innerHTML=`<span><b>${CARS.length}</b>carros para repasse</span><span><b>${new Set(CARS.map(c=>c.brand)).size}</b>marcas</span>`+(avg!=null?`<span><b>${avg}%</b>abaixo da FIPE, em média</span>`:"");
+function chips(){
+  const base=CARS.filter(okF), cnt={Todas:base.length}; base.forEach(c=>cnt[c.brand]=(cnt[c.brand]||0)+1);
+  if(!(marca in cnt)) marca="Todas";
+  const el=document.getElementById("chips"); el.innerHTML="";
+  Object.keys(cnt).forEach(b=>{const x=document.createElement("button");x.type="button";x.className="chip";x.setAttribute("aria-pressed",b===marca);x.innerHTML=b+'<span class="n">'+cnt[b]+'</span>';x.onclick=()=>{marca=b;chips();render()};el.appendChild(x)});
+  const fe=document.getElementById("faixas"); fe.innerHTML=""; const pool=CARS.filter(okM);
+  FX.forEach(([k,l,fn])=>{const x=document.createElement("button");x.type="button";x.className="chip";x.setAttribute("aria-pressed",faixa===k);x.innerHTML=l+'<span class="n">'+pool.filter(fn).length+'</span>';x.onclick=()=>{faixa=faixa===k?"":k;chips();render()};fe.appendChild(x)});
+}
+function render(){
+  const yr=c=>parseInt((c.year||"").split("/").pop())||0;
+  const list=CARS.filter(c=>okM(c)&&okF(c)).sort((a,b)=>ordem==="asc"?(a.price??1e12)-(b.price??1e12):ordem==="km"?a.km-b.km:ordem==="ano"?yr(b)-yr(a):ordem==="fipe"?(off(b)??-99)-(off(a)??-99):(b.price??-1)-(a.price??-1));
+  document.getElementById("grid").innerHTML=list.map(c=>{
+    const ref=`${c.brand} ${c.name} ${c.year} · ${kmf(c.km)} · final ${c.final}`;
+    const o=off(c);
+    return `<article class="card">
+      <div class="band"><span class="brand">${c.brand}</span><span class="local">${c.local}<br>Placa final ${c.final}</span></div>
+      <div class="body">
+        <h2 class="name">${c.name}</h2>
+        <ul class="facts"><li>${c.year}</li><li>${kmf(c.km)}</li></ul>
+        <div class="money">
+          <div class="price"><small>Valor repasse</small><b>${c.price!=null?brl(c.price):"Consulte"}</b></div>
+          ${c.fipe?`<div class="fipe">FIPE ${brl(c.fipe)}${o!=null&&o>0?`<br><span class="pct">${o}% abaixo</span>`:""}</div>`:""}
+        </div>
+        <div class="actions">
+          <a class="btn btn-y" href="${wa(`Olá Maycom! Tenho interesse no repasse: ${ref}${c.price!=null?" ("+brl(c.price)+")":""}.`)}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Tenho interesse</a>
+          <a class="btn btn-o" href="${wa(`Olá Maycom! Pode me mandar fotos e o laudo do repasse: ${ref}?`)}" target="_blank" rel="noopener" aria-label="Pedir fotos e laudo"><svg><use href="#i-cam"/></svg>Fotos</a>
+        </div>
+      </div></article>`;
+  }).join("")||`<p class="empty">Nenhum carro com esses filtros agora. <a href="${wa("Olá Maycom! Procuro um carro para repasse: ")}" target="_blank" rel="noopener">Me fala o que você procura</a>.</p>`;
+}
+document.getElementById("ordem").onchange=e=>{ordem=e.target.value;render()};
+chips();render();
+</script>
+</body>
+</html>
