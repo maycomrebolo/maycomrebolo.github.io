@@ -33,7 +33,9 @@ h1{font-weight:800;text-transform:uppercase;font-size:clamp(28px,5.4vw,52px);lin
 .btn-y:hover{filter:brightness(.95)}
 .btn-o{background:transparent;color:var(--ink);border-color:var(--line);text-transform:none;letter-spacing:0;font-weight:600}
 .btn:focus-visible,.chip:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.top-cta{margin-top:18px;display:flex;flex-wrap:wrap;gap:10px}
+.top-cta{margin-top:18px;display:grid;grid-template-columns:repeat(2,max-content);gap:10px}
+.top-cta .btn{text-transform:uppercase;letter-spacing:.03em;font-weight:700}
+@media (max-width:520px){.top-cta{grid-template-columns:1fr 1fr}.top-cta .l{display:none}.top-cta .btn{padding:13px 10px}}
 main{padding-block:22px 48px}
 .controls{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -99,7 +101,7 @@ footer a{color:var(--ink)}
     <h1>Maycom Rebolo</h1>
     <p class="sub">Carros para revenda, direto da concessionária. Valores para lojista, sujeitos a confirmação. Chame no WhatsApp para fotos, laudo e fechamento.</p>
     <div class="meta" id="meta"></div>
-    <div class="top-cta"><a class="btn btn-y" id="wa-top" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>Chamar no WhatsApp</a><a class="btn btn-o" href="https://www.instagram.com/grandbrasil_maycomrebolo_/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg>Seguir no Instagram</a></div>
+    <div class="top-cta"><a class="btn btn-y" id="wa-top" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span><span class="l">Chamar no </span>WhatsApp</span></a><a class="btn btn-ig" href="https://www.instagram.com/grandbrasil_maycomrebolo_/" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg><span><span class="l">Seguir no </span>Instagram</span></a></div>
   </div>
 </header>
 
