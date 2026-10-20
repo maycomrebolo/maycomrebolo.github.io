@@ -159,6 +159,10 @@ footer .inner{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:
 .consultor small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--hero-muted)}
 .consultor b{font-size:17px;font-weight:700;color:#fff}
 .consultor em{font-style:normal;font-size:13px;color:var(--hero-muted)}
+.busca{position:relative;margin:0 0 14px}
+.busca svg{position:absolute;left:14px;top:50%;width:20px;height:20px;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.busca input{width:100%;box-sizing:border-box;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:14px 14px 14px 44px;font:500 16px/1.2 inherit;font-family:inherit;outline:none}
+.busca input:focus{border-color:var(--accent)}
 </style>
 </head>
 <body>
@@ -188,6 +192,7 @@ footer .inner{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:
 
 <main class="pad">
   <div class="inner">
+    <div class="busca"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="q" type="search" placeholder="Buscar modelo (ex.: 320i, X1, Evoque, blindado)" autocomplete="off" aria-label="Buscar modelo"></div>
     <div class="split" role="group" aria-label="Blindagem">
       <button type="button" class="tile" id="t-b" data-v="b"><b>Blindados</b><span id="n-b"></span></button>
       <button type="button" class="tile" id="t-n" data-v="n"><b>Sem blindagem</b><span id="n-n"></span></button>
@@ -330,6 +335,10 @@ const FX=[["a","Até R$ 300 mil",c=>c.price<300000],["b","R$ 300 a 600 mil",c=>c
 const okB=c=>!blind||(blind==="b")===isB(c);
 const okM=c=>marca==="Todas"||c.brand===marca;
 const okF=c=>!faixa||FX.find(f=>f[0]===faixa)[2](c);
+let q="";
+const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const okQ=c=>{if(!q)return true;const F=[c.brand,c.name,c.year,...(c.specs||[]),c.tag||"",c.blind||""].map(norm);const hay=F.join(" | ");const hz=F.map(x=>x.replace(/[\s.\-]/g,"")).join("|");return q.split(/\s+/).every(t=>hay.includes(t)||hz.includes(t.replace(/[.\-]/g,"")))};
+document.getElementById("q").addEventListener("input",e=>{q=norm(e.target.value).trim();render()});
 const plural=n=>n+(n===1?" carro":" carros");
 function chips(){
   const base=CARS.filter(c=>okB(c)&&okF(c));
@@ -356,7 +365,7 @@ function chips(){
   });
 }
 function render(){
-  const list=CARS.filter(c=>okM(c)&&okB(c)&&okF(c))
+  const list=CARS.filter(c=>okM(c)&&okB(c)&&okF(c)&&okQ(c))
     .sort((a,b)=>ordem==="asc"?a.price-b.price:ordem==="km"?a.km-b.km:b.price-a.price);
   document.getElementById("grid").innerHTML=list.map(c=>{
     const msg=encodeURIComponent(`Olá Maycom! Tenho interesse no ${c.brand} ${c.name} ${c.year} (${brl(c.price)}) que vi no catálogo.`);
