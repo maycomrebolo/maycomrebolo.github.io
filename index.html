@@ -168,6 +168,7 @@ footer .inner{display:grid;gap:6px;border-top:1px solid var(--line);padding-top:
 .busca input:focus{border-color:var(--accent)}
 .q-share{display:inline-flex;margin-top:8px;font-size:14px;font-weight:700;color:#111;background:#25d366;border-radius:8px;padding:9px 14px;text-decoration:none}
 .q-share[hidden]{display:none}
+.mr-nav{display:flex;gap:6px;margin:14px 0 4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:5px;width:max-content;max-width:100%}.mr-nav a{padding:10px 18px;border-radius:8px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:14px;color:#fff;text-decoration:none;white-space:nowrap}.mr-nav a.on{background:#ffd400;color:#111}@media(max-width:520px){.mr-nav{width:100%}.mr-nav a{flex:1;text-align:center;padding:10px 8px;font-size:13px}}
 </style>
 </head>
 <body>
@@ -319,6 +320,8 @@ const CARS = [
 ];
 const PHONE="5511991198915";
 const DISP=(()=>{try{return new URLSearchParams(location.search).get("disparo")==="gb7426"}catch(_){return false}})();
+
+if(DISP&&PHONE==="5511991198915"){const h=document.querySelector("h1");if(h){const n=document.createElement("nav");n.className="mr-nav";n.setAttribute("aria-label","Disparo");n.innerHTML='<a class="on" href="https://grandbrasil-seminovos.github.io/maycomrebolo/?disparo=gb7426">Seminovos</a><a class="" href="https://grandbrasil-seminovos.github.io/repasse/?disparo=gb7426">Repasse</a>';h.parentNode.insertBefore(n,h)}}
 function limpo(){try{const u=new URL(location.href);u.searchParams.delete("disparo");u.searchParams.delete("busca");return u.origin+u.pathname}catch(_){return location.href}}
 function fone(){const d=PHONE.replace(/^55/,"");return `${d.slice(0,2)} ${d.slice(2,-4)}-${d.slice(-4)}`}
 function anuncio(c){
