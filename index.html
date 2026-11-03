@@ -365,7 +365,7 @@ async function disparar(id){
 }
 const brl=n=>n.toLocaleString("pt-BR",{style:"currency",currency:"BRL",maximumFractionDigits:0});
 const kmf=n=>n.toLocaleString("pt-BR")+" km";
-let marca="Todas", ordem="desc", blind="", faixa="";
+let marca="Todas", ordem="desc", blind="", faixa="", ele=false;
 try{ordem=localStorage.getItem("ordem")||"desc"}catch(e){}
 const sel=document.getElementById("ordem"); sel.value=ordem;
 
@@ -379,7 +379,10 @@ document.getElementById("proof").innerHTML=
 const FX=[["a","Até R$ 300 mil",c=>c.price<300000],["b","R$ 300 a 600 mil",c=>c.price>=300000&&c.price<600000],["c","Acima de R$ 600 mil",c=>c.price>=600000]];
 const okB=c=>!blind||(blind==="b")===isB(c);
 const okM=c=>marca==="Todas"||c.brand===marca;
-const okF=c=>!faixa||FX.find(f=>f[0]===faixa)[2](c);
+const isE=c=>/el[eé]tric/i.test([c.name,...(c.specs||[]),c.src||""].join(" "));
+const okFx=c=>!faixa||FX.find(f=>f[0]===faixa)[2](c);
+const okE=c=>!ele||isE(c);
+const okF=c=>okFx(c)&&okE(c);
 let q="";
 const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const okQ=c=>{if(!q)return true;const F=[c.brand,c.name,c.year,...(c.specs||[]),c.tag||"",c.blind||""].map(norm);const hay=F.join(" | ");const hz=F.map(x=>x.replace(/[\s.\-]/g,"")).join("|");return q.split(/\s+/).every(t=>hay.includes(t)||hz.includes(t.replace(/[.\-]/g,"")))};
@@ -388,6 +391,7 @@ function syncQ(){const raw=qEl.value.trim();q=norm(raw);try{const u=new URL(loca
   if(raw){const n=CARS.filter(c=>okQ(c)).length;shareEl.hidden=false;shareEl.href="https://wa.me/?text="+encodeURIComponent(`Separei ${n===1?"esta opção":"estas "+n+" opções"} de ${raw} para você:\n`+(()=>{try{const u=new URL(location.href);u.searchParams.delete("disparo");return u.href}catch(_){return location.href}})())}else shareEl.hidden=true}
 qEl.addEventListener("input",()=>{syncQ();render()});
 try{const b=new URLSearchParams(location.search).get("busca");if(b){qEl.value=b;syncQ()}}catch(_){}
+try{if(new URLSearchParams(location.search).has("eletricos"))ele=true}catch(_){}
 const plural=n=>n+(n===1?" carro":" carros");
 function chips(){
   const base=CARS.filter(c=>okB(c)&&okF(c));
@@ -404,7 +408,7 @@ function chips(){
     x.setAttribute("aria-pressed",b===marca);x.innerHTML=b+'<span class="n">'+counts[b]+'</span>';
     x.onclick=()=>{marca=b;chips();render()};el.appendChild(x);
   });
-  const fp=CARS.filter(c=>okB(c)&&okM(c));
+  const fp=CARS.filter(c=>okB(c)&&okM(c)&&okE(c));
   const fe=document.getElementById("faixas"); fe.innerHTML="";
   FX.forEach(([k,label,fn])=>{
     const n=fp.filter(fn).length;
@@ -412,6 +416,10 @@ function chips(){
     x.setAttribute("aria-pressed",faixa===k);x.innerHTML=label+'<span class="n">'+n+'</span>';
     x.onclick=()=>{faixa=faixa===k?"":k;chips();render()};fe.appendChild(x);
   });
+  const ne=CARS.filter(c=>okB(c)&&okM(c)&&okFx(c)&&isE(c)).length;
+  if(ne||ele){const x=document.createElement("button");x.type="button";x.className="chip chip-ele";
+    x.setAttribute("aria-pressed",ele);x.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" width="14" height="14" style="vertical-align:-2px;margin-right:4px"><path d="M13 2 4 14h7l-1 8 9-12h-7z" fill="currentColor"/></svg>Elétricos<span class="n">'+ne+'</span>';
+    x.onclick=()=>{ele=!ele;chips();render()};fe.appendChild(x);}
 }
 function render(){
   const list=CARS.filter(c=>okM(c)&&okB(c)&&okF(c)&&okQ(c))
