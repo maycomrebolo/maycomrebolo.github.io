@@ -334,7 +334,7 @@ const DISP=(()=>{try{return new URLSearchParams(location.search).get("disparo")=
 if(DISP&&PHONE==="5511991198915"){const h=document.querySelector("h1");if(h){const n=document.createElement("nav");n.className="mr-nav";n.setAttribute("aria-label","Disparo");n.innerHTML='<a class="on" href="https://grandbrasil-seminovos.github.io/maycomrebolo/?disparo=gb7426">Seminovos</a><a class="" href="https://grandbrasil-seminovos.github.io/repasse/?disparo=gb7426">Repasse</a>';h.parentNode.insertBefore(n,h)}}
 function limpo(){try{const u=new URL(location.href);u.searchParams.delete("disparo");u.searchParams.delete("busca");return u.origin+u.pathname}catch(_){return location.href}}
 function fone(){const d=PHONE.replace(/^55/,"");return `${d.slice(0,2)} ${d.slice(2,-4)}-${d.slice(-4)}`}
-function ep(p){return {e:Math.round(p*.5),m:Math.round(p*.0107/10)*10,f:Math.round(p*.4)}}
+function ep(p){const r=.0119,n=24,e=p*.5,f=p*.4,sg=(p-e)*.0192,io=(p-e+1595.41+sg)*.031/(1-.031),L=p-e+1595.41+sg+io,q=Math.pow(1+r,n);return {e:Math.round(e),m:Math.round((L*r*q-f*r)/(q-1)),f:Math.round(f)}}
 function anuncio(c){
   const t=c.name.split(/\s+/);let i=t.findIndex(w=>/\d/.test(w));if(i<0)i=t.length;if(i===0)i=1;
   const modelo=t.slice(0,i).join(" "),versao=t.slice(i).join(" ");
