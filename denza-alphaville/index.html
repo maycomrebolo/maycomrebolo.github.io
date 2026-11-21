@@ -298,5 +298,6 @@ async function disparar(id){
 if(DISP)document.querySelectorAll(".disp-slot").forEach(s=>{s.outerHTML=`<button class="btn btn-disp" type="button" data-disp="${s.dataset.id}">Disparar anúncio</button>`});
 document.getElementById("grid").addEventListener("click",e=>{const b=e.target.closest("[data-disp]");if(b){e.preventDefault();disparar(b.dataset.disp)}});
 </script>
+<script src="https://grandbrasil-seminovos.github.io/_leads/leads.js" defer></script>
 </body>
 </html>
